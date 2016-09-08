@@ -4,66 +4,66 @@ import java.math.BigInteger;
 
 public class Transaction {
 
-	BigInteger amount;
-    boolean is_pending;
+	long amount;
+    String isPending;
    // "aggregation-time": 1412686740000,
-    String account_id;
-    BigInteger clear_date;
-    String transaction_id;
-    String raw_merchant;
+    String accountID;
+    long clearDate;
+    String transactionID;
+    String rawMerchant;
     String categorization;
     String merchant;
-    String transaction_time;
-    String previous_transaction_id;
+    String transactionTime;
+    String previousTransactionID;
     //String memo_only_for_testing;
     //String payee_name_only_for_testing;
     
-    public BigInteger getAmount() {
+    public long getAmount() {
 		return amount;
 	}
     
-	public void setAmount(BigInteger amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 	
 	public String getAccountID() {
-		return account_id;
+		return accountID;
 	}
     
-	public void setAccountID(String account_id) {
-		this.account_id = account_id;
+	public void setAccountID(String accountId) {
+		this.accountID = accountID;
 	}
     
-	public boolean getIsPending() {
-		return is_pending;
+	public String getIsPending() {
+		return isPending;
 	}
     
-	public void setAccountID(boolean is_pending) {
-		this.is_pending = is_pending;
+	public void setIsPending(String isPending) {
+		this.isPending = isPending;
 	}
 	
-	 public BigInteger getClearDate() {
-			return clear_date;
+	 public long getClearDate() {
+			return clearDate;
 	}
 	    
-	public void setClearDate(BigInteger clear_date) {
-			this.clear_date = clear_date;
+	public void setClearDate(long clearDate) {
+			this.clearDate = clearDate;
 	}
 	
 	public String getTransactionID() {
-		return transaction_id;
+		return transactionID;
 	}
     
-	public void setTransactionID(String transaction_id) {
-		this.transaction_id = transaction_id;
+	public void setTransactionID(String transactionID) {
+		this.transactionID = transactionID;
 	}
 	
 	public String getRawMerchant() {
-		return raw_merchant;
+		return rawMerchant;
 	}
     
-	public void setRawMerchant(String raw_merchant) {
-		this.raw_merchant = raw_merchant;
+	public void setRawMerchant(String rawMerchant) {
+		this.rawMerchant = rawMerchant;
 	}
 	
 	public String getCategorization() {
@@ -83,21 +83,37 @@ public class Transaction {
 	}
 	
 	public String getTransactionTime() {
-		return transaction_time;
+		return transactionTime;
 	}
     
 	public void setTransactionTime(String transaction_time) {
-		this.transaction_time = transaction_time;
+		this.transactionTime = transactionTime;
 	}
 	
 	
 	public String getPreviousTransactionID() {
-		return previous_transaction_id;
+		return previousTransactionID;
 	}
     
-	public void setPreviousTransactionID(String previous_transaction_id) {
-		this.previous_transaction_id = previous_transaction_id;
+	public void setPreviousTransactionID(String previousTransactionID) {
+		this.previousTransactionID = previousTransactionID;
 	}
 	
-	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("***** Transaction Details *****\n");
+		sb.append("Account ID="+getAccountID()+"\n");
+		sb.append("Transaction ID="+getTransactionID()+"\n");
+		sb.append("Previous Transaction ID="+getPreviousTransactionID()+"\n");
+		sb.append("Raw Merchant="+getRawMerchant()+"\n");
+		sb.append("Merchant="+getMerchant()+"\n");
+		sb.append("Transaction Time="+getTransactionTime()+"\n");
+		sb.append("Amount="+getAmount()+"\n");
+		sb.append("Is Pending="+getIsPending()+"\n");
+		sb.append("Clear Date="+getClearDate()+"\n");
+		sb.append("Categorization="+getCategorization()+"\n");
+		sb.append("*****************************");
+		
+		return sb.toString();
+	}
 }
