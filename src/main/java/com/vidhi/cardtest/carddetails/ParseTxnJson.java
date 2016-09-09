@@ -1,16 +1,16 @@
 package com.vidhi.cardtest.carddetails;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Iterator;
 //import java.util.List;
-//import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,6 +23,9 @@ public class ParseTxnJson {
 
 	public static void main(String[] args) throws IOException {
 		
+		ArrayList<Transaction> a1 = new ArrayList<Transaction>();
+		//Iterator i = a1.iterator();
+		
 		//read json file data to String
 		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
 		
@@ -31,8 +34,12 @@ public class ParseTxnJson {
 		
 		//convert json string to object
 		Transaction t1 = objectMapper.readValue(jsonData, Transaction.class);
+		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
+		a1.add(t1);
 		
-		System.out.println("Transaction Object\n"+t1);
+		for(Transaction t4:a1){
+		System.out.println("Transaction Object\n"+t4);
+		}
 		
 		//convert Object to json string
 		Transaction t2 = createTxn();
@@ -47,6 +54,8 @@ public class ParseTxnJson {
 		FileWriter fw = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions1.txt");
 		fw.write(stringTxn.toString());
 		fw.close();
+		
+		LoadJson.bringJson();
 	}
 	
 	public static Transaction createTxn() {
@@ -66,5 +75,5 @@ public class ParseTxnJson {
 		
 		return t3;
 	}
-
+	
 }
