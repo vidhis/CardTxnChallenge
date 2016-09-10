@@ -21,7 +21,7 @@ import com.vidhi.cardtest.carddetails.Transaction;
 
 public class ParseTxnJson {
 
-	public static void main(String[] args) throws IOException {
+/*	public static void main(String[] args) throws IOException {
 		
 		ArrayList<Transaction> a1 = new ArrayList<Transaction>();
 		//Iterator i = a1.iterator();
@@ -56,6 +56,56 @@ public class ParseTxnJson {
 		fw.close();
 		
 		LoadJson.bringJson();
+	}*/
+	
+	public static void main(String[] args) throws IOException {
+		
+		Transaction[] arr;
+		
+		//read json file data to String
+		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
+		
+		//create ObjectMapper instance
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		//convert json string to object
+		TxnHistory t1 = objectMapper.readValue(jsonData, TxnHistory.class);
+		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
+		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
+		
+		arr=t1.getTransactions();
+		
+		for(Transaction t4:arr){
+		System.out.println("Transaction Object\n"+t4);
+		}
+		
+		//convert Object to json string
+		TxnHistory t2 = createTxnHistory();
+		//configure Object mapper for pretty print
+		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+		
+		//writing to console, can write to any output stream such as file
+		StringWriter stringTxn = new StringWriter();
+		objectMapper.writeValue(stringTxn, t2);
+	//	System.out.println("Transaction JSON is\n"+stringTxn);
+		
+		FileWriter fw = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions1.txt");
+		fw.write(stringTxn.toString());
+		fw.close();
+		
+		LoadJson.bringJson();
+	}
+	
+	public static TxnHistory createTxnHistory(){
+		
+		TxnHistory t5 = new TxnHistory();
+		Transaction[] t6= {createTxn(), createTxn()};
+		
+		t5.setError("no error Vidhi yaay");
+		t5.setTransactions(t6);
+		
+		return t5;
+		
 	}
 	
 	public static Transaction createTxn() {
