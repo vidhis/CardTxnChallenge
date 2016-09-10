@@ -112,7 +112,8 @@ public class ParseTxnJson {
 
 		Transaction t3= new Transaction();
 		
-		t3.setIsPending("true");
+		t3.setIsPending(true);
+		t3.setAggregationTime(1412456120000L);
 		t3.setAccountID("12353454");
 		t3.setAmount(3454999993L);
 		t3.setCategorization("Unknown");

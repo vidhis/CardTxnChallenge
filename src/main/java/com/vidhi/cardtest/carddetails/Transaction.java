@@ -2,21 +2,42 @@ package com.vidhi.cardtest.carddetails;
 
 import java.math.BigInteger;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Transaction {
 
 	long amount;
-    String isPending;
-   // "aggregation-time": 1412686740000,
+	
+	 @JsonProperty("is-pending")
+    boolean isPending;
+	
+	 @JsonProperty("aggregation-time")
+    long aggregationTime;
+	
+	@JsonProperty("account-id")
     String accountID;
+	
+	@JsonProperty("clear-date")
     long clearDate;
+	
+	@JsonProperty("transaction-id")
     String transactionID;
-    String rawMerchant;
+    
+	@JsonProperty("raw-merchant")
+	String rawMerchant;
+	
     String categorization;
     String merchant;
+    
+    @JsonProperty("transaction-time")
     String transactionTime;
+    
+    @JsonProperty("previous-transaction-id")
     String previousTransactionID;
     //String memo_only_for_testing;
     //String payee_name_only_for_testing;
+    
+ 
     
     public long getAmount() {
 		return amount;
@@ -34,12 +55,20 @@ public class Transaction {
 		this.accountID = accountID;
 	}
     
-	public String getIsPending() {
+	public boolean getIsPending() {
 		return isPending;
 	}
     
-	public void setIsPending(String isPending) {
+	public void setIsPending(boolean isPending) {
 		this.isPending = isPending;
+	}
+	
+	 public long getAggregationTime() {
+			return aggregationTime;
+	}
+	    
+	public void setAggregationTime(long aggregationTime) {
+			this.aggregationTime = aggregationTime;
 	}
 	
 	 public long getClearDate() {
@@ -112,6 +141,7 @@ public class Transaction {
 		sb.append("Is Pending="+getIsPending()+"\n");
 		sb.append("Clear Date="+getClearDate()+"\n");
 		sb.append("Categorization="+getCategorization()+"\n");
+		sb.append("Aggregation Time="+getAggregationTime()+"\n");
 		sb.append("*****************************");
 		
 		return sb.toString();
