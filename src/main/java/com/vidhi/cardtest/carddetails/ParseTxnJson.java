@@ -87,12 +87,15 @@ public class ParseTxnJson {
 
 		Map<String, Long> m1 = new HashMap<String, Long>();
 		
+		//Calculates Spent which is -ve amount
 		for(int k=0; k<arr.length;k++){
 						
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)))
-				m1.put(arr[k].getTransactionTime().substring(0, 7), m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount());
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+			//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
+				m1.put(arr[k].getTransactionTime().substring(0, 7), (m1.get(arr[k].getTransactionTime().substring(0, 7)))+arr[k].getAmount());
+			}
 			
-			else
+			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0))
 				m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
 		}
 		
@@ -140,7 +143,7 @@ public class ParseTxnJson {
 		t3.setIsPending(true);
 		t3.setAggregationTime(1412456120000L);
 		t3.setAccountID("12353454");
-		t3.setAmount(3454999993L);
+		t3.setAmount(345499);
 		t3.setCategorization("Unknown");
 		t3.setClearDate(1412985120000L);
 		t3.setMerchant("Sunoco");
