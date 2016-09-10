@@ -25,47 +25,9 @@ import com.vidhi.cardtest.carddetails.Transaction;
 
 public class ParseTxnJson {
 
-/*	public static void main(String[] args) throws IOException {
-		
-		ArrayList<Transaction> a1 = new ArrayList<Transaction>();
-		//Iterator i = a1.iterator();
-		
-		//read json file data to String
-		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
-		
-		//create ObjectMapper instance
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		//convert json string to object
-		Transaction t1 = objectMapper.readValue(jsonData, Transaction.class);
-		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
-		a1.add(t1);
-		
-		for(Transaction t4:a1){
-		System.out.println("Transaction Object\n"+t4);
-		}
-		
-		//convert Object to json string
-		Transaction t2 = createTxn();
-		//configure Object mapper for pretty print
-		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-		
-		//writing to console, can write to any output stream such as file
-		StringWriter stringTxn = new StringWriter();
-		objectMapper.writeValue(stringTxn, t2);
-	//	System.out.println("Transaction JSON is\n"+stringTxn);
-		
-		FileWriter fw = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions1.txt");
-		fw.write(stringTxn.toString());
-		fw.close();
-		
-		LoadJson.bringJson();
-	}*/
-	
 	
 	public static void main(String[] args) throws IOException {
-		
-		
+				
 		
 		//read json file data to String
 		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
@@ -237,7 +199,6 @@ public class ParseTxnJson {
 
 		}
 		
-		//Calculates Income which is +ve amount
 		
 		ArrayList<OutputObj> aObj = new ArrayList<OutputObj>();
 		
@@ -248,6 +209,35 @@ public class ParseTxnJson {
 		   aObj.add(ob1);
 		}
 		
+		m1.clear();
+		
+		//Calculates Income which is +ve amount
+				for(int k=0; k<arr.length;k++){
+								
+					if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+					//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+						tempSpent = m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount();
+						m1.remove(arr[k].getTransactionTime().substring(0, 7));
+						m1.put(arr[k].getTransactionTime().substring(0, 7), tempSpent);
+					}
+					
+					else if(!(m1.containsKey(arr[k].getTransactionTime().substring(0, 7))) && (arr[k].getAmount()>0)){	
+					//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+						m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
+					}
+
+				}
+		
+				boolean flagMonFound=false;
+				
+				for (Map.Entry<String, Long> entry1 : m1.entrySet()) {				
+					for(int q=0;q<aObj.size()-1;q++){		
+						if(aObj.get(q).getYyyyMm().matches(entry1.getKey())){
+							aObj.get(q).setAmtEarned(entry1.getValue());
+						}
+					}
+				}
+				
 		for(int p=0;p<aObj.size()-1;p++){
 			System.out.println(aObj.get(p).toString());
 			}
