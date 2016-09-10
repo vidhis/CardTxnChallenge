@@ -85,26 +85,54 @@ public class ParseTxnJson {
 //		System.out.println(arr[cnt]);
 		}
 
-		Map<String, Long> m1 = new HashMap<String, Long>();
+		Map<String, ArrayList<Long>> m1 = new HashMap<String, ArrayList<Long>>();
+		ArrayList<Long> al= new ArrayList<Long>();
+		long tempSpent;
 		
 		//Calculates Spent which is -ve amount
 		for(int k=0; k<arr.length;k++){
 						
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
-			//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
-				m1.put(arr[k].getTransactionTime().substring(0, 7), (m1.get(arr[k].getTransactionTime().substring(0, 7)))+arr[k].getAmount());
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
+			
+				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
+				
+				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(0)+arr[k].getAmount();
+				al.set(0, tempSpent);
+				m1.put(arr[k].getTransactionTime().substring(0, 7), al);
 			}
 			
-			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0))
-				m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
+			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
+				al.set(0, arr[k].getAmount());
+				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
+			}
 		}
 		
-		Set s = m1.entrySet();
-		Iterator it1 = s.iterator();
+		//Calculates Income which is +ve amount
+		for(int k=0; k<arr.length;k++){
+			
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+			
+				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
+				
+				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(1)+arr[k].getAmount();
+				al.set(1, tempSpent);
+				m1.put(arr[k].getTransactionTime().substring(0, 7), al);
+			}
+			
+			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+				al.set(1, arr[k].getAmount());
+				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
+			}
+		}
 		
-		while(it1.hasNext()){
-			Map.Entry me = (Map.Entry)it1.next();
-			System.out.println("Key :"+me.getKey()+" Value: "+me.getValue());	
+		
+		
+		for (Map.Entry<String, ArrayList<Long>> entry : m1.entrySet()) {
+		    String key = entry.getKey();
+		    ArrayList<Long> value = entry.getValue();
+		    for(Long valLong : value){
+		        System.out.println("key : " + key + " value : " + valLong);
+		    }
 		}
 		
 		//convert Object to json string
