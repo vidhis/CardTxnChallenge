@@ -62,6 +62,7 @@ public class ParseTxnJson {
 		LoadJson.bringJson();
 	}*/
 	
+	
 	public static void main(String[] args) throws IOException {
 		
 		
@@ -77,63 +78,24 @@ public class ParseTxnJson {
 		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
 		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
 		
-		Transaction[] arr= new Transaction[t1.getTransactions().length];
+		/*arr= new Transaction[t1.getTransactions().length];
 		
 		for(int cnt=0;cnt<t1.getTransactions().length;cnt++){
 		arr[cnt] = new Transaction();	
 		arr[cnt] =t1.getTransactions()[cnt];
 //		System.out.println(arr[cnt]);
 		}
-
-		Map<String, ArrayList<Long>> m1 = new HashMap<String, ArrayList<Long>>();
-		ArrayList<Long> al= new ArrayList<Long>();
-		long tempSpent;
+*/
+		//CalcValuesMapArrayList(arr);
+		ArrayList<OutputObj> ao=CalcValNoArrayList(t1.getTransactions());
+		FileWriter fw1 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/final.txt");
 		
-		//Calculates Spent which is -ve amount
-		for(int k=0; k<arr.length;k++){
-						
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
-			
-				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
-				
-				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(0)+arr[k].getAmount();
-				al.set(0, tempSpent);
-				m1.put(arr[k].getTransactionTime().substring(0, 7), al);
-			}
-			
-			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
-				al.set(0, arr[k].getAmount());
-				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
-			}
+		for(int p=0;p<ao.size()-1;p++){
+		fw1.write(ao.get(p).toString());
+	//	System.out.println(ao.get(p).toString());
 		}
 		
-		//Calculates Income which is +ve amount
-		for(int k=0; k<arr.length;k++){
-			
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
-			
-				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
-				
-				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(1)+arr[k].getAmount();
-				al.set(1, tempSpent);
-				m1.put(arr[k].getTransactionTime().substring(0, 7), al);
-			}
-			
-			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
-				al.set(1, arr[k].getAmount());
-				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
-			}
-		}
-		
-		
-		
-		for (Map.Entry<String, ArrayList<Long>> entry : m1.entrySet()) {
-		    String key = entry.getKey();
-		    ArrayList<Long> value = entry.getValue();
-		    for(Long valLong : value){
-		        System.out.println("key : " + key + " value : " + valLong);
-		    }
-		}
+		fw1.close();
 		
 		//convert Object to json string
 		TxnHistory t2 = createTxnHistory();
@@ -182,5 +144,118 @@ public class ParseTxnJson {
 		
 		return t3;
 	}
+	
+	public static void CalcValuesMapArrayList(Transaction[] arr){
+		
+		Map<String, ArrayList<Long>> m1 = new HashMap<String, ArrayList<Long>>();
+		ArrayList<Long> al= new ArrayList<Long>();
+		long tempSpent=0;
+		
+		//Calculates Spent which is -ve amount
+		for(int k=0; k<arr.length;k++){
+						
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
+			
+				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
+				
+				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(0)+arr[k].getAmount();
+				(m1.get(arr[k].getTransactionTime().substring(0, 7))).remove(0);
+				(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(0, tempSpent);
+				//m1.put(arr[k].getTransactionTime().substring(0, 7), al);
+			}
+			
+			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
+				//(m1.get(arr[k].getTransactionTime().substring(0, 7))).add((0, arr[k].getAmount());
+				al.add(0, arr[k].getAmount());
+				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
+			}
+
+		}
+		
+		//Calculates Income which is +ve amount
+		for(int k=0; k<arr.length;k++){
+			
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+			
+				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
+				
+				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(1)+arr[k].getAmount();
+				System.out.println(tempSpent);
+				System.out.println(m1.get(arr[k].getTransactionTime().substring(0, 7)).get(1));
+				(m1.get(arr[k].getTransactionTime().substring(0, 7))).remove(1);
+				(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(1, tempSpent);
+				System.out.println(m1.get(arr[k].getTransactionTime().substring(0, 7)).get(1));
+				//m1.put(arr[k].getTransactionTime().substring(0, 7), al);
+			}
+			
+			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+				//(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(1, arr[k].getAmount());
+				al.add(1, arr[k].getAmount());
+				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
+			}
+
+		}
+		
+		
+		for (Map.Entry<String, ArrayList<Long>> entry : m1.entrySet()) {
+		    String key = entry.getKey();
+		    ArrayList<Long> value = entry.getValue();
+		    for(Long valLong : value){
+		        System.out.println("key : " + key + " value : " + valLong);
+		    }
+		}
+		
+	}
+	
+	public static ArrayList<OutputObj> CalcValNoArrayList(Transaction[] arr1){
+		
+		Map<String, Long> m1 = new HashMap<String, Long>();
+		long tempSpent=0;
+		
+		Transaction[] arr= new Transaction[arr1.length];
+		
+		for(int cnt=0;cnt<arr1.length;cnt++){
+		arr[cnt] = new Transaction();	
+		arr[cnt] =arr1[cnt];
+		//System.out.println(arr[cnt]);
+		}
+		
+		//Calculates Spent which is -ve amount
+		for(int k=0; k<arr.length;k++){
+						
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
+			//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+				tempSpent = m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount();
+				m1.remove(arr[k].getTransactionTime().substring(0, 7));
+				m1.put(arr[k].getTransactionTime().substring(0, 7), tempSpent);
+			}
+			
+			else if(!(m1.containsKey(arr[k].getTransactionTime().substring(0, 7))) && (arr[k].getAmount()<0)){	
+			//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+				m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
+			}
+
+		}
+		
+		//Calculates Income which is +ve amount
+		
+		ArrayList<OutputObj> aObj = new ArrayList<OutputObj>();
+		
+		for (Map.Entry<String, Long> entry : m1.entrySet()) {
+			OutputObj ob1=new OutputObj();
+			ob1.setYyyyMm(entry.getKey());
+		   ob1.setAmtSpent(entry.getValue());
+		   aObj.add(ob1);
+		}
+		
+		for(int p=0;p<aObj.size()-1;p++){
+			System.out.println(aObj.get(p).toString());
+			}
+			
+		
+		return aObj;
+	}
+		
+		
 	
 }
