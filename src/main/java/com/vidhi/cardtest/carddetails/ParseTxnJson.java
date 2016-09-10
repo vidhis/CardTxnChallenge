@@ -9,14 +9,18 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 //import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ForwardingTable;
 import com.vidhi.cardtest.carddetails.Transaction;
 
 public class ParseTxnJson {
@@ -60,7 +64,7 @@ public class ParseTxnJson {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Transaction[] arr;
+		
 		
 		//read json file data to String
 		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
@@ -73,11 +77,31 @@ public class ParseTxnJson {
 		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
 		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
 		
-		arr=t1.getTransactions();
+		Transaction[] arr=t1.getTransactions();
 		
 //		for(Transaction t4:arr){
 //		System.out.println("Transaction Object\n"+t4);
 //		}
+
+		Map<String, Long> m1 = new HashMap<String, Long>();
+		Set s = m1.entrySet();
+		Iterator it1 = s.iterator();
+		
+		for(int k=0; k<arr.length;k++){
+			
+			System.out.println(arr[k].getTransactionTime());
+			
+			if(m1.containsKey(arr[k].transactionTime.substring(0, 5)))
+				m1.put(arr[k].transactionTime.substring(0, 5), m1.get(arr[k].transactionTime.substring(0, 5))+arr[k].getAmount());
+			
+			else
+				m1.put(arr[k].transactionTime.substring(0, 5),arr[k].getAmount());
+		}
+		
+		while(it1.hasNext()){
+			Map.Entry me = (Map.Entry)it1.next();
+			System.out.println("Key :"+me.getKey()+" Value: "+me.getValue());	
+		}
 		
 		//convert Object to json string
 		TxnHistory t2 = createTxnHistory();
