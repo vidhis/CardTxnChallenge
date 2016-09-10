@@ -56,7 +56,7 @@ public class Transaction {
 		return accountID;
 	}
     
-	public void setAccountID(String accountId) {
+	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}
     
@@ -120,7 +120,7 @@ public class Transaction {
 		return transactionTime;
 	}
     
-	public void setTransactionTime(String transaction_time) {
+	public void setTransactionTime(String transactionTime) {
 		this.transactionTime = transactionTime;
 	}
 	

@@ -77,26 +77,27 @@ public class ParseTxnJson {
 		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
 		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
 		
-		Transaction[] arr=t1.getTransactions();
+		Transaction[] arr= new Transaction[t1.getTransactions().length];
 		
-//		for(Transaction t4:arr){
-//		System.out.println("Transaction Object\n"+t4);
-//		}
+		for(int cnt=0;cnt<t1.getTransactions().length;cnt++){
+		arr[cnt] = new Transaction();	
+		arr[cnt] =t1.getTransactions()[cnt];
+//		System.out.println(arr[cnt]);
+		}
 
 		Map<String, Long> m1 = new HashMap<String, Long>();
-		Set s = m1.entrySet();
-		Iterator it1 = s.iterator();
 		
 		for(int k=0; k<arr.length;k++){
-			
-			System.out.println(arr[k].getTransactionTime());
-			
-			if(m1.containsKey(arr[k].transactionTime.substring(0, 5)))
-				m1.put(arr[k].transactionTime.substring(0, 5), m1.get(arr[k].transactionTime.substring(0, 5))+arr[k].getAmount());
+						
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)))
+				m1.put(arr[k].getTransactionTime().substring(0, 7), m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount());
 			
 			else
-				m1.put(arr[k].transactionTime.substring(0, 5),arr[k].getAmount());
+				m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
 		}
+		
+		Set s = m1.entrySet();
+		Iterator it1 = s.iterator();
 		
 		while(it1.hasNext()){
 			Map.Entry me = (Map.Entry)it1.next();
