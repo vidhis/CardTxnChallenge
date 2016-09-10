@@ -75,9 +75,9 @@ public class ParseTxnJson {
 		
 		arr=t1.getTransactions();
 		
-		for(Transaction t4:arr){
-		System.out.println("Transaction Object\n"+t4);
-		}
+//		for(Transaction t4:arr){
+//		System.out.println("Transaction Object\n"+t4);
+//		}
 		
 		//convert Object to json string
 		TxnHistory t2 = createTxnHistory();

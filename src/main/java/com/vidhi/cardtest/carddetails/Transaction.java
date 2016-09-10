@@ -37,6 +37,11 @@ public class Transaction {
     //String memo_only_for_testing;
     //String payee_name_only_for_testing;
     
+    @JsonProperty("memo-only-for-testing")
+    String memoOnlyForTesting;
+ 
+    @JsonProperty("payee-name-only-for-testing")
+    String payeeNameOnlyForTesting;
  
     
     public long getAmount() {
@@ -128,6 +133,22 @@ public class Transaction {
 		this.previousTransactionID = previousTransactionID;
 	}
 	
+	public String getPayeeNameOnlyForTesting() {
+		return payeeNameOnlyForTesting;
+	}
+    
+	public void setPayeeNameOnlyForTesting(String payeeNameOnlyForTesting) {
+		this.payeeNameOnlyForTesting = payeeNameOnlyForTesting;
+	}
+	
+	public String getMemoOnlyForTesting() {
+		return memoOnlyForTesting;
+	}
+    
+	public void setMemoOnlyForTesting(String memoOnlyForTesting) {
+		this.memoOnlyForTesting = memoOnlyForTesting;
+	}
+	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("***** Transaction Details *****\n");
@@ -142,6 +163,8 @@ public class Transaction {
 		sb.append("Clear Date="+getClearDate()+"\n");
 		sb.append("Categorization="+getCategorization()+"\n");
 		sb.append("Aggregation Time="+getAggregationTime()+"\n");
+		sb.append("Memo for Testing="+getMemoOnlyForTesting()+"\n");
+		sb.append("Payee Name for Testing="+getPayeeNameOnlyForTesting()+"\n");
 		sb.append("*****************************");
 		
 		return sb.toString();
