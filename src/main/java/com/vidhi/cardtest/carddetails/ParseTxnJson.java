@@ -2,18 +2,35 @@ package com.vidhi.cardtest.carddetails;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 //import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,7 +44,8 @@ public class ParseTxnJson {
 
 	
 	public static void main(String[] args) throws IOException {
-				
+		
+		loadAllData();
 		
 		//read json file data to String
 		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
@@ -326,6 +344,41 @@ public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
 			
 		
 		return aObj;
+	}
+
+	public static void loadAllData() throws IOException{
+
+	//	Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/data.txt"
+		//""
+		
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost("https://prod-api.level-labs.com/api/v2/core/get-all-transactions");
+
+		post.setHeader("Referer", "https://prod-api.level-labs.com/api/v2/core/get-all-transactions");
+		post.setHeader("Accept", "application/json");
+		post.setHeader("Content-type", "application/json");
+		
+		// if you need any parameters
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair("uid", "1110590645"));
+		urlParameters.add(new BasicNameValuePair("token", "9B006AA9FC0ACA764A2CDC6E29CF32DF"));
+		urlParameters.add(new BasicNameValuePair("api-token", "AppTokenForInterview"));
+		urlParameters.add(new BasicNameValuePair("json-strict-mode", "false"));
+		urlParameters.add(new BasicNameValuePair("json-verbose-response", "false"));
+		post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+		HttpResponse response = client.execute(post);
+
+		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+		StringBuffer result = new StringBuffer();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+		    result.append(line);
+		}
+		
+		System.out.println(result.toString());
+		
 	}
 			
 }
