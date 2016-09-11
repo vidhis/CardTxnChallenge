@@ -40,24 +40,27 @@ public class ParseTxnJson {
 		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
 		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
 		
-		/*arr= new Transaction[t1.getTransactions().length];
 		
-		for(int cnt=0;cnt<t1.getTransactions().length;cnt++){
-		arr[cnt] = new Transaction();	
-		arr[cnt] =t1.getTransactions()[cnt];
-//		System.out.println(arr[cnt]);
-		}
-*/
 		//CalcValuesMapArrayList(arr);
 		ArrayList<OutputObj> ao=CalcValNoArrayList(t1.getTransactions());
 		FileWriter fw1 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/final.txt");
 		
 		for(int p=0;p<ao.size()-1;p++){
 		fw1.write(ao.get(p).toString());
-	//	System.out.println(ao.get(p).toString());
 		}
 		
 		fw1.close();
+		
+		//CalcValuesMapArrayList(arr);
+				ArrayList<OutputObj> ao1=CalcValNoDonut(t1.getTransactions());
+				FileWriter fw2 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/NoDonut.txt");
+				
+				for(int r=0;r<ao1.size()-1;r++){
+				fw2.write(ao1.get(r).toString());
+				}
+				
+				fw2.close();
+		
 		
 		//convert Object to json string
 		TxnHistory t2 = createTxnHistory();
@@ -245,7 +248,84 @@ public class ParseTxnJson {
 		
 		return aObj;
 	}
+			
+public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
+		
+		Map<String, Long> m1 = new HashMap<String, Long>();
+		long tempSpent=0;
+		
+		Transaction[] arr= new Transaction[arr1.length];
+		
+		for(int cnt=0;cnt<arr1.length;cnt++){
+		arr[cnt] = new Transaction();	
+		arr[cnt] =arr1[cnt];
+		//System.out.println(arr[cnt]);
+		}
+		
+		//Calculates Spent which is -ve amount
+		for(int k=0; k<arr.length;k++){
+
+			//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
+				
+			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0) && (!arr[k].getMerchant().equalsIgnoreCase("DUNKIN #336784")) && (!arr[k].getMerchant().equalsIgnoreCase("Krispy Kreme Donuts"))  ){
+			//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+				tempSpent = m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount();
+				m1.remove(arr[k].getTransactionTime().substring(0, 7));
+				m1.put(arr[k].getTransactionTime().substring(0, 7), tempSpent);
+			}
+			
+			else if(!(m1.containsKey(arr[k].getTransactionTime().substring(0, 7))) && (arr[k].getAmount()<0)){	
+			//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+				m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
+			}
+
+		}
 		
 		
-	
+		ArrayList<OutputObj> aObj = new ArrayList<OutputObj>();
+		
+		for (Map.Entry<String, Long> entry : m1.entrySet()) {
+			OutputObj ob1=new OutputObj();
+			ob1.setYyyyMm(entry.getKey());
+		   ob1.setAmtSpent(entry.getValue());
+		   aObj.add(ob1);
+		}
+		
+		m1.clear();
+		
+		//Calculates Income which is +ve amount
+				for(int k=0; k<arr.length;k++){
+								
+					if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
+					//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+						tempSpent = m1.get(arr[k].getTransactionTime().substring(0, 7))+arr[k].getAmount();
+						m1.remove(arr[k].getTransactionTime().substring(0, 7));
+						m1.put(arr[k].getTransactionTime().substring(0, 7), tempSpent);
+					}
+					
+					else if(!(m1.containsKey(arr[k].getTransactionTime().substring(0, 7))) && (arr[k].getAmount()>0)){	
+					//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
+						m1.put(arr[k].getTransactionTime().substring(0, 7),arr[k].getAmount());
+					}
+
+				}
+		
+				boolean flagMonFound=false;
+				
+				for (Map.Entry<String, Long> entry1 : m1.entrySet()) {				
+					for(int q=0;q<aObj.size()-1;q++){		
+						if(aObj.get(q).getYyyyMm().matches(entry1.getKey())){
+							aObj.get(q).setAmtEarned(entry1.getValue());
+						}
+					}
+				}
+				
+		for(int p=0;p<aObj.size()-1;p++){
+			System.out.println(aObj.get(p).toString());
+			}
+			
+		
+		return aObj;
+	}
+			
 }
