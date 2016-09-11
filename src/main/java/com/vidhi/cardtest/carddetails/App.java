@@ -11,7 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class App {
-public static void main(String[] args) throws IOException {
+	
+	public static void main(String[] args) throws IOException {
 		
 		ParseTxnJson.loadAllData();
 		
@@ -23,30 +24,30 @@ public static void main(String[] args) throws IOException {
 		
 		//convert json string to object
 		TxnHistory t1 = objectMapper.readValue(jsonData, TxnHistory.class);
-		//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
-		System.out.println("Size of array of transactions is " +t1.getTransactions().length);
+		//System.out.println("Size of array of transactions is " +t1.getTransactions().length);
 		
-		
-		//CalcValuesMapArrayList(arr);
+		if(args.length==0){
 		ArrayList<OutputObj> ao=ParseTxnJson.CalcValNoArrayList(t1.getTransactions());
-		FileWriter fw1 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/final.txt");
+		FileWriter fw1 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/AllSpendingIncome.txt");
 		
 		for(int p=0;p<ao.size()-1;p++){
 		fw1.write(ao.get(p).toString());
 		}
 		
 		fw1.close();
+		}
 		
-		//CalcValuesMapArrayList(arr);
-				ArrayList<OutputObj> ao1=ParseTxnJson.CalcValNoDonut(t1.getTransactions());
-				FileWriter fw2 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/NoDonut.txt");
+		if(args.length==1 && args[0].equalsIgnoreCase("ignore-donuts")){
 				
-				for(int r=0;r<ao1.size()-1;r++){
+			ArrayList<OutputObj> ao1=ParseTxnJson.CalcValNoDonut(t1.getTransactions());
+			FileWriter fw2 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/NoDonut.txt");
+				
+			for(int r=0;r<ao1.size()-1;r++){
 				fw2.write(ao1.get(r).toString());
-				}
+			}
 				
-				fw2.close();
-		
+			fw2.close();
+		}		
 		
 		//convert Object to json string
 		TxnHistory t2 = ParseTxnJson.createTxnHistory();
@@ -62,7 +63,7 @@ public static void main(String[] args) throws IOException {
 		fw.write(stringTxn.toString());
 		fw.close();
 		
-		LoadJson.bringJson();
+		//LoadJson.bringJson();
 	}
 	
 }
