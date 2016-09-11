@@ -74,68 +74,7 @@ public class ParseTxnJson {
 		
 		return t3;
 	}
-	
-	public static void CalcValuesMapArrayList(Transaction[] arr){
-		
-		Map<String, ArrayList<Long>> m1 = new HashMap<String, ArrayList<Long>>();
-		ArrayList<Long> al= new ArrayList<Long>();
-		long tempSpent=0;
-		
-		//Calculates Spent which is -ve amount
-		for(int k=0; k<arr.length;k++){
-						
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
-			
-				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
-				
-				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(0)+arr[k].getAmount();
-				(m1.get(arr[k].getTransactionTime().substring(0, 7))).remove(0);
-				(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(0, tempSpent);
-				//m1.put(arr[k].getTransactionTime().substring(0, 7), al);
-			}
-			
-			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0)){
-				//(m1.get(arr[k].getTransactionTime().substring(0, 7))).add((0, arr[k].getAmount());
-				al.add(0, arr[k].getAmount());
-				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
-			}
 
-		}
-		
-		//Calculates Income which is +ve amount
-		for(int k=0; k<arr.length;k++){
-			
-			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
-			
-				//	System.out.println(arr[k].getAmount()+" "+m1.get(arr[k].getTransactionTime().substring(0, 7)));
-				
-				tempSpent = (m1.get(arr[k].getTransactionTime().substring(0, 7))).get(1)+arr[k].getAmount();
-				System.out.println(tempSpent);
-				System.out.println(m1.get(arr[k].getTransactionTime().substring(0, 7)).get(1));
-				(m1.get(arr[k].getTransactionTime().substring(0, 7))).remove(1);
-				(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(1, tempSpent);
-				System.out.println(m1.get(arr[k].getTransactionTime().substring(0, 7)).get(1));
-				//m1.put(arr[k].getTransactionTime().substring(0, 7), al);
-			}
-			
-			else if(!m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()>0)){
-				//(m1.get(arr[k].getTransactionTime().substring(0, 7))).add(1, arr[k].getAmount());
-				al.add(1, arr[k].getAmount());
-				m1.put(arr[k].getTransactionTime().substring(0, 7),al);
-			}
-
-		}
-		
-		
-		for (Map.Entry<String, ArrayList<Long>> entry : m1.entrySet()) {
-		    String key = entry.getKey();
-		    ArrayList<Long> value = entry.getValue();
-		    for(Long valLong : value){
-		        System.out.println("key : " + key + " value : " + valLong);
-		    }
-		}
-		
-	}
 	
 	public static ArrayList<OutputObj> CalcValNoArrayList(Transaction[] arr1){
 		
@@ -230,7 +169,6 @@ public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
 		//Calculates Spent which is -ve amount
 		for(int k=0; k<arr.length;k++){
 
-			//if((!t1.getMerchant().contains("DUNKIN #336784")) && (!t1.getMerchant().contains("Krispy Kreme Donuts")) )
 				
 			if(m1.containsKey(arr[k].getTransactionTime().substring(0, 7)) && (arr[k].getAmount()<0) && (!arr[k].getMerchant().equalsIgnoreCase("DUNKIN #336784")) && (!arr[k].getMerchant().equalsIgnoreCase("Krispy Kreme Donuts"))  ){
 			//	System.out.println(arr[k].getTransactionTime().substring(0, 7));			
@@ -293,53 +231,6 @@ public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
 		return aObj;
 	}
 
-	public static void loadAllData() throws IOException{
-
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost("https://prod-api.level-labs.com/api/v2/core/get-all-transactions");
-
-		post.addHeader("Accept", "application/json");
-		post.addHeader("Content-type", "application/json");
-		
-		// if you need any parameters
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		urlParameters.add(new BasicNameValuePair("uid", "1110590645"));
-		urlParameters.add(new BasicNameValuePair("token", "9B006AA9FC0ACA764A2CDC6E29CF32DF"));
-		urlParameters.add(new BasicNameValuePair("api-token", "AppTokenForInterview"));
-		urlParameters.add(new BasicNameValuePair("json-strict-mode", "false"));
-		urlParameters.add(new BasicNameValuePair("json-verbose-response", "false"));
-		post.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-		StringEntity input = new StringEntity("{\"args\": {\"uid\": 1110590645, \"token\": \"9B006AA9FC0ACA764A2CDC6E29CF32DF\", \"api-token\": \"AppTokenForInterview\", \"json-strict-mode\": false, \"json-verbose-response\": false}}");
-        input.setContentType("application/json");
-        post.setEntity(input);
-		
-        for (NameValuePair h : urlParameters)
-        {
-            post.addHeader(h.getName(), h.getValue());
-        }
-        
-		HttpResponse response = client.execute(post);
-
-		response.toString();
-		
-		//System.out.println(response);
-		
-		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-		    result.append(line);
-		//    System.out.println(line);
-		}
-		
-		//System.out.println(result.toString());
-		
-		FileWriter fw = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt");
-		fw.write(result.toString());
-		fw.close();
-		
-    }
+	
 			
 }

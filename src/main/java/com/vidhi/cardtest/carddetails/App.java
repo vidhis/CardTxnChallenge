@@ -14,7 +14,7 @@ public class App {
 	
 	public static void main(String[] args) throws IOException {
 		
-		ParseTxnJson.loadAllData();
+		LoadJson.loadAllData();
 		
 		//read json file data to String
 		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt"));
