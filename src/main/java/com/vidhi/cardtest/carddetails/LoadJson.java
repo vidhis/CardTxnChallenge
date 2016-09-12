@@ -19,7 +19,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class LoadJson {
 	
-	public static void loadAllData() throws IOException{
+	public static void loadAllData(String currDir) throws IOException{
 
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost("https://prod-api.level-labs.com/api/v2/core/get-all-transactions");
@@ -62,7 +62,7 @@ public class LoadJson {
 		
 		//System.out.println(result.toString());
 		
-		FileWriter fw = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt");
+		FileWriter fw = new FileWriter(currDir+"/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt");
 		fw.write(result.toString());
 		fw.close();
 		

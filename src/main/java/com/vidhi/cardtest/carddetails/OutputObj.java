@@ -32,7 +32,7 @@ public class OutputObj {
 	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(getYyyyMm()+": { spent: "+ getAmtSpent()+", income: "+getAmtEarned()+"}");
+		sb.append(getYyyyMm()+": { spent: $"+ Math.abs(getAmtSpent())+", income: $"+getAmtEarned()+"}");
 		return sb.toString();
 	}
 }

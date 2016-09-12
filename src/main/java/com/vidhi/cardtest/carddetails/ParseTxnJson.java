@@ -41,40 +41,6 @@ import com.google.common.collect.ForwardingTable;
 import com.vidhi.cardtest.carddetails.Transaction;
 
 public class ParseTxnJson {
-
-	
-	
-	public static TxnHistory createTxnHistory(){
-		
-		TxnHistory t5 = new TxnHistory();
-		Transaction[] t6= {createTxn(), createTxn()};
-		
-		t5.setError("no error Vidhi yaay");
-		t5.setTransactions(t6);
-		
-		return t5;
-		
-	}
-	
-	public static Transaction createTxn() {
-
-		Transaction t3= new Transaction();
-		
-		t3.setIsPending(true);
-		t3.setAggregationTime(1412456120000L);
-		t3.setAccountID("12353454");
-		t3.setAmount(345499);
-		t3.setCategorization("Unknown");
-		t3.setClearDate(1412985120000L);
-		t3.setMerchant("Sunoco");
-		t3.setPreviousTransactionID("234234345345");
-		t3.setRawMerchant("SUNOCO 0299792200");
-		t3.setTransactionID("1412985120000");
-		t3.setTransactionTime("014-10-07T17:29:00.000Z");
-		
-		return t3;
-	}
-
 	
 	public static ArrayList<OutputObj> CalcValNoArrayList(Transaction[] arr1){
 		
