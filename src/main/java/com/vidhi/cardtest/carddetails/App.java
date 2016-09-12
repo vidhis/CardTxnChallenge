@@ -30,11 +30,16 @@ public class App {
 		ArrayList<OutputObj> ao=ParseTxnJson.CalcValNoArrayList(t1.getTransactions());
 		FileWriter fw1 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/AllSpendingIncome.txt");
 		
-		for(int p=0;p<ao.size()-1;p++){
+		for(int p=0;p<ao.size();p++){
 		fw1.write(ao.get(p).toString());
 		}
 		
 		fw1.close();
+		
+		for(int p=0;p<ao.size();p++){
+			System.out.println(ao.get(p).toString());
+		}
+		
 		}
 		
 		if(args.length==1 && args[0].equalsIgnoreCase("ignore-donuts")){
@@ -42,11 +47,15 @@ public class App {
 			ArrayList<OutputObj> ao1=ParseTxnJson.CalcValNoDonut(t1.getTransactions());
 			FileWriter fw2 = new FileWriter("/Users/Vidhi/Documents/workspace/carddetails/src/main/java/com/vidhi/cardtest/carddetails/NoDonut.txt");
 				
-			for(int r=0;r<ao1.size()-1;r++){
+			for(int r=0;r<ao1.size();r++){
 				fw2.write(ao1.get(r).toString());
 			}
 				
 			fw2.close();
+			
+			for(int p=0;p<ao1.size();p++){
+				System.out.println(ao1.get(p).toString());
+			}
 		}		
 		
 		//convert Object to json string
