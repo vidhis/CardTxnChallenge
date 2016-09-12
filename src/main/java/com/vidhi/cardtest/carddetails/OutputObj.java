@@ -34,8 +34,17 @@ public class OutputObj {
 	
 	//Method to get Output string in expected format
 	public String toString(){
+		String spentStr, incomeStr;
 		StringBuilder sb = new StringBuilder();
-		sb.append(getYyyyMm()+": { spent: $"+ Math.abs(getAmtSpent())+", income: $"+getAmtEarned()+"}");
+		spentStr = Long.toString(Math.abs(getAmtSpent()));
+		int spentdollar = spentStr.length()-2;
+		incomeStr=Long.toString(getAmtEarned());
+		int incomedollar= incomeStr.length()-2;
+		
+		//System.out.println(spentStr+ ","+ spentdollar+ ","+ incomeStr+ ","+incomedollar);
+		
+		sb.append(getYyyyMm()+": { spent: $"+ spentStr.substring(0,spentdollar)+"."+spentStr.substring(spentdollar) +","
+				+ " income: $"+incomeStr.substring(0,incomedollar)+"."+incomeStr.substring(incomedollar)+"}");
 		return sb.toString();
 	}
 }
