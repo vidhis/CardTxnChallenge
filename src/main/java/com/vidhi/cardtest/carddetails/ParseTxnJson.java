@@ -164,7 +164,7 @@ public class ParseTxnJson {
 		System.out.println(avgIncome);
 		
 		OutputObj ob3=new OutputObj();
-		ob3.setYyyyMm("Average");
+		ob3.setYyyyMm("average");
 		ob3.setAmtEarned(avgIncome);
 		ob3.setAmtSpent(avgSpent);
 		aObj.add(ob3);
@@ -259,7 +259,7 @@ public class ParseTxnJson {
 		System.out.println(avgIncome);
 
 		OutputObj ob3=new OutputObj();
-		ob3.setYyyyMm("Average");
+		ob3.setYyyyMm("average");
 		ob3.setAmtEarned(avgIncome);
 		ob3.setAmtSpent(avgSpent);
 		aObj.add(ob3);
