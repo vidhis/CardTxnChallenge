@@ -12,15 +12,15 @@ Pull the Project from Github at https://github.com/vidhis/CardTxnChallenge.git o
 
 Navigate to the folder that has pom.xml through Terminal and give the following commands to run the Project :
 
-1. This is to check if the build completes successfully
+This is to check if the build completes successfully
 
 mvn compile
 
-2. To get all the Per month Spent and Income for all the Transactions. It also shows the Average Spent and Income for all the months for which the API Response has data. The Result will be shown on the console and will be also present in file - AllSpendingIncome.txt 
+To get all the Per month Spent and Income for all the Transactions. It also shows the Average Spent and Income for all the months for which the API Response has data. The Result will be shown on the console and will be also present in file - AllSpendingIncome.txt 
 
 mvn exec:java -Dexec.mainClass="com.vidhi.cardtest.carddetails.App" -Dexec.classpathScope=runtime
 
-3. This will show all the Spending and Income per Month. It also shows Average without the Transactions that were for Donuts identifed by Merchant:DUNKIN #336784 and Krispy Kreme Donuts The Result will be shown on the console and will be also present in file - NoDonut.txt
+This will show all the Spending and Income per Month. It also shows Average without the Transactions that were for Donuts identifed by Merchant:DUNKIN #336784 and Krispy Kreme Donuts The Result will be shown on the console and will be also present in file - NoDonut.txt
 
 mvn exec:java -Dexec.mainClass=com.vidhi.cardtest.carddetails.App -Dexec.classpathScope=runtime -Dexec.args="ignore-donuts"
 
