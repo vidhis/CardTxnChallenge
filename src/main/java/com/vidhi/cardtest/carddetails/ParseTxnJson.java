@@ -138,22 +138,45 @@ public class ParseTxnJson {
 				boolean flagMonFound=false;
 				
 				for (Map.Entry<String, Long> entry1 : m1.entrySet()) {				
-					for(int q=0;q<aObj.size()-1;q++){		
+					for(int q=0;q<aObj.size();q++){		
 						if(aObj.get(q).getYyyyMm().matches(entry1.getKey())){
 							aObj.get(q).setAmtEarned(entry1.getValue());
 						}
 					}
 				}
 				
-		for(int p=0;p<aObj.size()-1;p++){
+		
+			
+		int noOfMonths = aObj.size();
+		long spentTotal =0L;
+		long incomeTotal =0L;
+		long avgSpent=0L;
+		long avgIncome=0L;
+		
+		for(int p=0;p<aObj.size();p++){
+			spentTotal+=aObj.get(p).getAmtSpent();
+			incomeTotal+=aObj.get(p).getAmtEarned();
+		}
+		
+		avgSpent = spentTotal/noOfMonths;
+		System.out.println(avgSpent);
+		avgIncome = incomeTotal/noOfMonths;
+		System.out.println(avgIncome);
+		
+		OutputObj ob3=new OutputObj();
+		ob3.setYyyyMm("Average");
+		ob3.setAmtEarned(avgIncome);
+		ob3.setAmtSpent(avgSpent);
+		aObj.add(ob3);
+		
+		for(int p=0;p<aObj.size();p++){
 			System.out.println(aObj.get(p).toString());
 			}
-			
 		
 		return aObj;
 	}
 			
-public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
+	public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
 		
 		Map<String, Long> m1 = new HashMap<String, Long>();
 		long tempSpent=0;
@@ -216,16 +239,39 @@ public static ArrayList<OutputObj> CalcValNoDonut(Transaction[] arr1){
 				boolean flagMonFound=false;
 				
 				for (Map.Entry<String, Long> entry1 : m1.entrySet()) {				
-					for(int q=0;q<aObj.size()-1;q++){		
+					for(int q=0;q<aObj.size();q++){		
 						if(aObj.get(q).getYyyyMm().matches(entry1.getKey())){
 							aObj.get(q).setAmtEarned(entry1.getValue());
 						}
 					}
 				}
 				
-		for(int p=0;p<aObj.size()-1;p++){
+		int noOfMonths = aObj.size();
+		long spentTotal =0L;
+		long incomeTotal =0L;
+		long avgSpent=0L;
+		long avgIncome=0L;
+		
+		for(int p=0;p<aObj.size();p++){
+			spentTotal+=aObj.get(p).getAmtSpent();
+			incomeTotal+=aObj.get(p).getAmtEarned();
+		}
+		
+		avgSpent = spentTotal/noOfMonths;
+		System.out.println(avgSpent);
+		avgIncome = incomeTotal/noOfMonths;
+		System.out.println(avgIncome);
+
+		OutputObj ob3=new OutputObj();
+		ob3.setYyyyMm("Average");
+		ob3.setAmtEarned(avgIncome);
+		ob3.setAmtSpent(avgSpent);
+		aObj.add(ob3);
+		
+		
+		for(int p=0;p<aObj.size();p++){
 			System.out.println(aObj.get(p).toString());
-			}
+		}
 			
 		
 		return aObj;
