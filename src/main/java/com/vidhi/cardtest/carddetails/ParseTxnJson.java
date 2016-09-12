@@ -80,6 +80,19 @@ public class ParseTxnJson {
 					}
 				}
 				
+				OutputObj temp;
+				
+				//Sorting the Output Objects based on Month
+				for(int r=0;r<aObj.size()-1;r++){	
+					for(int w=r+1;w<aObj.size();w++){
+					if(aObj.get(r).getYyyyMm().compareTo(aObj.get(w).getYyyyMm())>0){
+						temp = aObj.get(r);
+						aObj.set(r, aObj.get(w));
+						aObj.set(w, temp);;
+						
+					  }
+					}	
+				}	
 		
 		//Logic to calculate Average	
 		int noOfMonths = aObj.size();
@@ -175,6 +188,19 @@ public class ParseTxnJson {
 					}
 				}
 		
+				OutputObj temp;
+				//Sorting the output Object based on Month
+				for(int r=0;r<aObj.size()-1;r++){	
+					for(int w=r+1;w<aObj.size();w++){
+					if(aObj.get(r).getYyyyMm().compareTo(aObj.get(w).getYyyyMm())>0){
+						temp = aObj.get(r);
+						aObj.set(r, aObj.get(w));
+						aObj.set(w, temp);;
+						
+					  }
+					}	
+				}		
+				
 		//Logic to calculate Average	
 		int noOfMonths = aObj.size();
 		long spentTotal =0L;
