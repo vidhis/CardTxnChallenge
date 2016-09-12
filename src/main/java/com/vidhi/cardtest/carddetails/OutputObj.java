@@ -1,5 +1,7 @@
 package com.vidhi.cardtest.carddetails;
 
+
+//Class for the Output: Transaction Month and  Amount Spent and Income
 public class OutputObj {
 
 	private String yyyymm;
@@ -30,6 +32,7 @@ public class OutputObj {
 		return amtEarned;
 	}
 	
+	//Method to get Output string in expected format
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(getYyyyMm()+": { spent: $"+ Math.abs(getAmtSpent())+", income: $"+getAmtEarned()+"}");

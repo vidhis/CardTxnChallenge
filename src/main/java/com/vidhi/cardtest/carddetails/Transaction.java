@@ -1,7 +1,5 @@
 package com.vidhi.cardtest.carddetails;
 
-import java.math.BigInteger;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Transaction {
@@ -149,24 +147,5 @@ public class Transaction {
 		this.memoOnlyForTesting = memoOnlyForTesting;
 	}
 	
-	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("***** Transaction Details *****\n");
-		sb.append("Account ID="+getAccountID()+"\n");
-		sb.append("Transaction ID="+getTransactionID()+"\n");
-		sb.append("Previous Transaction ID="+getPreviousTransactionID()+"\n");
-		sb.append("Raw Merchant="+getRawMerchant()+"\n");
-		sb.append("Merchant="+getMerchant()+"\n");
-		sb.append("Transaction Time="+getTransactionTime()+"\n");
-		sb.append("Amount="+getAmount()+"\n");
-		sb.append("Is Pending="+getIsPending()+"\n");
-		sb.append("Clear Date="+getClearDate()+"\n");
-		sb.append("Categorization="+getCategorization()+"\n");
-		sb.append("Aggregation Time="+getAggregationTime()+"\n");
-		sb.append("Memo for Testing="+getMemoOnlyForTesting()+"\n");
-		sb.append("Payee Name for Testing="+getPayeeNameOnlyForTesting()+"\n");
-		sb.append("*****************************");
-		
-		return sb.toString();
-	}
+	
 }

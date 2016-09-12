@@ -1,49 +1,16 @@
 package com.vidhi.cardtest.carddetails;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-//import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.ForwardingTable;
-import com.vidhi.cardtest.carddetails.Transaction;
 
 public class ParseTxnJson {
 	
 	public static ArrayList<OutputObj> CalcValNoArrayList(Transaction[] arr1){
 		
+		//Map to hold each type of Txn - Spent and Income by month
 		Map<String, Long> m1 = new HashMap<String, Long>();
 		long tempSpent=0;
 		
@@ -75,6 +42,7 @@ public class ParseTxnJson {
 		
 		ArrayList<OutputObj> aObj = new ArrayList<OutputObj>();
 		
+		//Creating new objects with Month details and Spent amount, adding them to Array
 		for (Map.Entry<String, Long> entry : m1.entrySet()) {
 			OutputObj ob1=new OutputObj();
 			ob1.setYyyyMm(entry.getKey());
@@ -103,6 +71,7 @@ public class ParseTxnJson {
 		
 				boolean flagMonFound=false;
 				
+				//Checks existing objects with Month details and updates income to them
 				for (Map.Entry<String, Long> entry1 : m1.entrySet()) {				
 					for(int q=0;q<aObj.size();q++){		
 						if(aObj.get(q).getYyyyMm().matches(entry1.getKey())){
@@ -112,7 +81,7 @@ public class ParseTxnJson {
 				}
 				
 		
-			
+		//Logic to calculate Average	
 		int noOfMonths = aObj.size();
 		long spentTotal =0L;
 		long incomeTotal =0L;
@@ -125,9 +94,7 @@ public class ParseTxnJson {
 		}
 		
 		avgSpent = spentTotal/noOfMonths;
-		System.out.println(avgSpent);
 		avgIncome = incomeTotal/noOfMonths;
-		System.out.println(avgIncome);
 		
 		OutputObj ob3=new OutputObj();
 		ob3.setYyyyMm("average");
@@ -207,7 +174,8 @@ public class ParseTxnJson {
 						}
 					}
 				}
-				
+		
+		//Logic to calculate Average	
 		int noOfMonths = aObj.size();
 		long spentTotal =0L;
 		long incomeTotal =0L;
@@ -220,9 +188,7 @@ public class ParseTxnJson {
 		}
 		
 		avgSpent = spentTotal/noOfMonths;
-		System.out.println(avgSpent);
 		avgIncome = incomeTotal/noOfMonths;
-		System.out.println(avgIncome);
 
 		OutputObj ob3=new OutputObj();
 		ob3.setYyyyMm("average");

@@ -1,5 +1,6 @@
 package com.vidhi.cardtest.carddetails;
 
+//Class with definition of records coming in API Response
 public class TxnHistory {
 
 	private String error;

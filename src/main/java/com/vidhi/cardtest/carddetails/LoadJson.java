@@ -1,7 +1,6 @@
 package com.vidhi.cardtest.carddetails;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,6 +61,7 @@ public class LoadJson {
 		
 		//System.out.println(result.toString());
 		
+		//Writes response of API to file
 		FileWriter fw = new FileWriter(currDir+"/src/main/java/com/vidhi/cardtest/carddetails/Transactions.txt");
 		fw.write(result.toString());
 		fw.close();
