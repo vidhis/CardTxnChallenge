@@ -1,1 +1,6 @@
+com/vidhi/cardtest/carddetails/LoadJson.class
+com/vidhi/cardtest/carddetails/TxnHistory.class
+com/vidhi/cardtest/carddetails/OutputObj.class
+com/vidhi/cardtest/carddetails/ParseTxnJson.class
 com/vidhi/cardtest/carddetails/App.class
+com/vidhi/cardtest/carddetails/Transaction.class
