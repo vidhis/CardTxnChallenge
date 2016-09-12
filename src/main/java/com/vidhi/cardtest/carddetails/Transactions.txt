@@ -1,6 +1,0 @@
-{
-   {      "amount": -34300,      "isPending": "false",      "accountID": "123456789",      "clearDate": 1412790480000,      "transactionID": "1412790480000",      "rawMerchant": "7-ELEVEN 23853",      "categorization": "Unknown",      "merchant": "7-Eleven 23853",      "transactionTime": "2014-10-07T12:59:00.000Z"
-   },
-   {      "amount": 54300,      "isPending": "true",      "accountID": “534534646”,      "clearDate": 1611790480000,      "transactionID": "1412756780000",      "rawMerchant": “DONUT 23853",      "categorization": "Unknown",      "merchant": "DUNKIN #336784",      "transactionTime": "2014-10-07T12:59:00.000Z"
-   }
-}
